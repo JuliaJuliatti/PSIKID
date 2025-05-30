@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134508022157",
+    "project_id": "psikid-18db5",
+    "storage_bucket": "psikid-18db5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134508022157:android:3fda84c577f8044037d5c4",
+        "android_client_info": {
+          "package_name": "com.clima.psikid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIhXTEN2MfQWfwr6QqY4SjMG9yjM0Bl1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
