@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'auth.dart'; // <- Import da AuthService
-import 'home_page.dart';
+import 'package:psikid/pages/home_page.dart';
+import 'package:psikid/pages/login_page.dart'; // página de login com vídeo
+import 'auth.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Cadastro extends StatefulWidget {
+  const Cadastro({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Cadastro> createState() => _CadastroState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CadastroState extends State<Cadastro> {
   late VideoPlayerController _controller;
   final TextEditingController _email = TextEditingController();
   final TextEditingController _senha = TextEditingController();
@@ -35,22 +36,27 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() async {
-    final message = await AuthService().login(
+  void _cadastrar() async {
+    final message = await AuthService().registration(
       email: _email.text.trim(),
       password: _senha.text.trim(),
     );
 
-    if (message == 'Success') {
+    if (message != null && message.contains('Sucess')) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message ?? 'Erro desconhecido')),
-      );
     }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message ?? 'Erro ao cadastrar')),
+    );
+  }
+
+  void _limpar() {
+    _email.clear();
+    _senha.clear();
   }
 
   @override
@@ -110,14 +116,38 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: _login,
+                            onPressed: _cadastrar,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepPurple,
+                              backgroundColor: Colors.teal,
                               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                             ).copyWith(
                               foregroundColor: WidgetStateProperty.all(Colors.white),
                             ),
-                            child: const Text('Entrar'),
+                            child: const Text('Cadastrar'),
+                          ),
+                          const SizedBox(height: 10),
+                          ElevatedButton(
+                            onPressed: _limpar,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                            ).copyWith(
+                              foregroundColor: WidgetStateProperty.all(Colors.white),
+                            ),
+                            child: const Text('Limpar credenciais'),
+                          ),
+                          const SizedBox(height: 10),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LoginPage()),
+                              );
+                            },
+                            child: const Text(
+                              'Já tem conta? Fazer login',
+                              style: TextStyle(color: Colors.deepPurple),
+                            ),
                           ),
                         ],
                       ),
